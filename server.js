@@ -16,14 +16,22 @@ console.log('mongodb ')
         res.send({message:'Server is running...away!!!'})
     })
 
-    app.get('/storeKitty', (req,res){
+    app.get('/storeKitty', (req,res) => { 
         let kittyExample = {
-            color: 'light brown',
-            weight: '500lbs',
+            color: 'calico',
+            weight: '8lbs',
             adopted: true
-        }
+        };
+        let newKitty = new Kitty(kittyExample);
+        newKitty.save()
+            .then(kitty => {
+                console.log("Kitty saved");
+                res.send(kitty);
+                })
+                .catch(err => {
+                    console.log("error");
+            })
     })
-    let newKitty = new Kitty(kittyExample)
 
     app.listen(port, (req,res) => {
         console.log('listening on port 8000')
